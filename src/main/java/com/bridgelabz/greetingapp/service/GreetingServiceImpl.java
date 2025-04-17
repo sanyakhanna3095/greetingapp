@@ -28,6 +28,18 @@ public class GreetingServiceImpl implements IGreetingService {
         return greetingRepository.findById(id).get();
     }
 
+    @Override
+    public Greeting updateGreeting(long id, User user) {
+        Greeting existingGreeting = greetingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Greeting not found"));
+        existingGreeting.setMessage("Hello, " + user.getFirstName() + "!");
+        return greetingRepository.save(existingGreeting);
+    }
+
+    @Override
+    public void deleteGreeting(long id) {
+        greetingRepository.deleteById(id);
+    }
 
 
 }
